@@ -9,6 +9,11 @@ def home():
     return render_template('index.html')
 
 
+@app.route('/aluno')
+def listar_aluno():
+    return render_template('aluno/lista.html')
+
+
 @app.route('/sobre') # uma rota (decorator)
 def sobre():
     return render_template('sobre.html')
