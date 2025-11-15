@@ -11,7 +11,8 @@ def home():
 
 @app.route('/aluno')
 def listar_aluno():
-    return render_template('aluno/lista.html')
+    msg = "a senha é sem senha"
+    return render_template('aluno/lista.html',msg=msg)
 
 
 @app.route('/sobre') # uma rota (decorator)
