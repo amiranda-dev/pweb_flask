@@ -15,11 +15,20 @@ def listar_aluno():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("SELECT a.id, a.nome, a.idade, a.cidade FROM aluno a")
-    lista_alunos = cursor.fetchall()
+    lista = cursor.fetchall()
     conn.close()
-    return render_template('aluno/lista.html',lista=lista_alunos)
+    return render_template('aluno/lista.html',lista=lista)
 
 
+@app.route('/professor')
+def listar_professor():
+    DB_PATH = "banco_escola.db"
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT p.id, p.nome, p.disciplina  FROM professor p ")
+    lista = cursor.fetchall()
+    conn.close()
+    return render_template('professor/lista.html',lista=lista)
 @app.route('/sobre') # uma rota (decorator)
 def sobre():
     return render_template('sobre.html')
