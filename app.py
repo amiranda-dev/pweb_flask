@@ -20,6 +20,17 @@ def listar_aluno():
     return render_template('aluno/lista.html',lista=lista)
 
 
+@app.route('/professor')
+def listar_professor():
+    DB_PATH = "banco_escola.db"
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT p.id, p.nome, p.disciplina  FROM professor p ")
+    lista = cursor.fetchall()
+    conn.close()
+    return render_template('professor/lista.html',lista=lista)
+
+
 @app.route('/turma')
 def listar_turma():
     DB_PATH = "banco_escola.db"
@@ -34,17 +45,6 @@ def listar_turma():
     lista = cursor.fetchall()
     conn.close()
     return render_template('turma/lista.html',lista=lista)
-
-
-@app.route('/professor')
-def listar_professor():
-    DB_PATH = "banco_escola.db"
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute("SELECT p.id, p.nome, p.disciplina  FROM professor p ")
-    lista = cursor.fetchall()
-    conn.close()
-    return render_template('professor/lista.html',lista=lista)
 
 
 @app.route('/sobre') # uma rota (decorator)
