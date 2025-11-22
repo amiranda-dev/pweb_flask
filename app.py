@@ -1,5 +1,5 @@
 from flask import Flask, render_template # importanto a classe Flask
-
+import sqlite3
 
 app = Flask(__name__) # objeto chamado app e sua localização
 
@@ -11,18 +11,12 @@ def home():
 
 @app.route('/aluno')
 def listar_aluno():
-    lista_alunos = [
-        (1, "Ana Beatriz Silva", 20, "Teresina"),
-        (2, "Carlos Eduardo Lima", 22, "Parnaíba"),
-        (3, "Mariana Souza", 19, "Picos"),
-        (4, "Rafael Oliveira", 23, "Floriano"),
-        (5, "Juliana Costa", 21, "Campo Maior"),
-        (6, "Pedro Henrique", 20, "Oeiras"),
-        (7, "Fernanda Gomes", 18, "Piripiri"),
-        (8, "Lucas Almeida", 22, "Altos"),
-        (9, "Bianca Rocha", 24, "Esperantina"),
-        (10, "Matheus Ribeiro", 19, "Barras"),
-    ]
+    DB_PATH = "banco_escola.db"
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT a.id, a.nome, a.idade, a.cidade FROM aluno a")
+    lista_alunos = cursor.fetchall()
+    conn.close()
     return render_template('aluno/lista.html',lista=lista_alunos)
 
 
