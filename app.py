@@ -50,10 +50,8 @@ def saudacao1(nome):
 
 @app.route('/saudacao2/')
 def saudacao2():
-    id = request.args.get('id')
-    status = request.args.get('status')
-    dados = f'O id envaido foi: {id} e o status: {status}'
-    return render_template('saudacao/saudacao.html', valor_recebido=dados)
+    nome = request.args.get('nome')
+    return render_template('saudacao/saudacao.html', valor_recebido=nome)
 
 @app.route('/sobre') # uma rota (decorator)
 def sobre():
