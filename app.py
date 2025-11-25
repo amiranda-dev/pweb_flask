@@ -53,6 +53,16 @@ def saudacao2():
     nome = request.args.get('nome')
     return render_template('saudacao/saudacao.html', valor_recebido=nome)
 
+
+@app.route('/login', methods=['POST'])
+def login():
+    usuario = request.form['usuario']
+    senha = request.form['senha']
+    email = request.form['email']
+    dados = f'Usuário: {usuario}, Senha: {senha} e e-mail: {email}'
+    return render_template('saudacao/saudacao.html', valor_recebido=dados)
+
+
 @app.route('/sobre') # uma rota (decorator)
 def sobre():
     return render_template('sobre.html')

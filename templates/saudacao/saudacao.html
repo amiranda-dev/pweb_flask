@@ -5,4 +5,11 @@
 <a href="/saudacao1/Alisson">Parâmetro de rota</a> <br><br>
 <a href="/saudacao2/?nome=Zeane Campos">Query String</a> <br><br>
 
+<form action="/login" method="POST">
+    <input type="text" name="usuario" placeholder="login"><br><br>
+    <input type="password" name="senha" placeholder="senha"><br><br>
+    <input type="email" name="email" placeholder="Seu E-mail"><br><br>
+    <button type="submit">Enviar</button>
+</form>
+
 {% include "dashboard/rodape.html" %}
