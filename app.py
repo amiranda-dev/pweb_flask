@@ -63,6 +63,21 @@ def login():
     return render_template('saudacao/saudacao.html', valor_recebido=dados)
 
 
+@app.route('/desafio')
+def desafio():
+    return render_template('desafio/desafio.html')
+
+
+@app.route('/registro', methods=['POST'])
+def registro():
+    nome = request.form['nome']
+    dataNascimento = request.form['dataNasc']
+    cpf = request.form['cpf']
+    nomeMae = request.form['nomeMae']
+    dados = f'Nome: {nome} - Data de Nascimento: {dataNascimento} - CPF: {cpf} - Nome da Mãe: {nomeMae}'
+    return render_template('desafio/desafio.html', valor_recebido=dados)
+
+
 @app.route('/sobre') # uma rota (decorator)
 def sobre():
     return render_template('sobre.html')
