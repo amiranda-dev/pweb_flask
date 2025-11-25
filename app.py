@@ -27,7 +27,8 @@ def form_aluno():
     return render_template('aluno/form.html', aluno=None)
 
 
-@app.route('/aluno/salvar/', methods=['POST'])
+@app.route('/aluno/salvar/', methods=['POST'])  # Inserção
+@app.route('/aluno/salvar/<int:id>', methods=['POST'])  # Atualização
 def salvar_aluno(id=None):
     nome = request.form['nome']
     idade = request.form['idade']
@@ -40,6 +41,25 @@ def salvar_aluno(id=None):
         flash("Registro salvo com sucesso", "success")
     else:
         flash(result['mensagem'], "danger")
+    return redirect('/aluno')
+
+@app.route('/aluno/editar/<int:id>')
+def editar_aluno(id):
+    dao = AlunoDAO()
+    aluno = dao.buscar_por_id(id)
+    return render_template('aluno/form.html', aluno=aluno)
+
+
+@app.route("/aluno/remover/<int:id>")
+def remover_aluno(id):
+    dao = AlunoDAO()
+    resultado = dao.remover(id)
+
+    if resultado["status"] == "ok":
+        flash("Registro removido com sucesso!", "success")
+    else:
+        flash(resultado["mensagem"], "danger")
+
     return redirect('/aluno')
 
 
