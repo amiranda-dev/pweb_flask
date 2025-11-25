@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request # importanto a classe Flask
+from flask import Flask, render_template, request, redirect, flash # importanto a classe Flask
 from dao.db_config import get_connection
 from dao.aluno_dao import AlunoDAO
 from dao.professor_dao import ProfessorDAO
@@ -7,6 +7,7 @@ from dao.turma_dao import TurmaDAO
 
 
 app = Flask(__name__) # objeto chamado app e sua localização
+app.secret_key = 'uma_chave_muito_secreta_e_unica'
 
 
 @app.route('/') # uma rota (decorator)
@@ -19,6 +20,27 @@ def listar_aluno():
     dao = AlunoDAO()
     lista = dao.listar()
     return render_template('aluno/lista.html',lista=lista)
+
+
+@app.route('/aluno/form')
+def form_aluno():
+    return render_template('aluno/form.html', aluno=None)
+
+
+@app.route('/aluno/salvar/', methods=['POST'])
+def salvar_aluno(id=None):
+    nome = request.form['nome']
+    idade = request.form['idade']
+    cidade = request.form['cidade']
+
+    # salvar os dados no banco
+    dao = AlunoDAO()
+    result = dao.salvar(id,nome, idade, cidade)
+    if result["status"] == "ok":
+        flash("Registro salvo com sucesso", "success")
+    else:
+        flash(result['mensagem'], "danger")
+    return redirect('/aluno')
 
 
 @app.route('/professor')
