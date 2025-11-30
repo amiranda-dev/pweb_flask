@@ -3,9 +3,9 @@ from dao.db_config import get_connection
 
 class TurmaDAO:
     sqlSelect = ''' 
-                    SELECT turma.id, semestre, nome_curso, professor.nome  FROM turma 
+                    SELECT turma.id, semestre, nome_curso, professor.nome, professor.disciplina   FROM turma 
                     JOIN curso on curso.id=turma.curso_id
-                    JOIN professor on professor.id=turma.professor_id
+                    JOIN professor on professor.id=turma.professor_id ORDER BY turma.id DESC 
                 '''
 
 
