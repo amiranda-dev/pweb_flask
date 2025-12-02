@@ -258,7 +258,8 @@ def ajuda():
 @app.route('/teste')
 def teste():
     turma = [6, '2025.2', 2, 2]
-    return render_template('saudacao/teste.html', turma=turma)
+    listar_cursos = CursoDAO().listar()
+    return render_template('saudacao/teste.html', turma=turma, listar_cursos=listar_cursos)
 
 
 if __name__ == '__main__':

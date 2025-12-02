@@ -3,13 +3,12 @@
 <h1 class="mb-4">Input Select</h1>
 
 <form action="/teste" method="post">
-    <label for="nome" class="form-label">Curso ID- {{turma[2]}}</label>
+    <label for="nome" class="form-label">Curso ID- {{turma.2}}</label>
 
     <select name="curso_id" id="curso_id" class="form-select" required>
-        <option value="1">Informática</option>
-        <option value="2" {{"selected" if turma[2] == 2 else ""}}>Administração</option>
-        <option value="3">Enfermagem</option>
-        <option value="4" selected>Eletrotécnica</option>
+        {% for curso in listar_cursos %}
+            <option value="{{curso.0}}"  {{"selected" if turma.2 == curso.0 else ""}}>{{curso.0}} - {{curso.1}}</option>
+        {% endfor %}
     </select>
 </form>
 
