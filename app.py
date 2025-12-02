@@ -174,6 +174,40 @@ def listar_turma():
     lista = dao.listar()
     return render_template('turma/lista.html',lista=lista)
 
+@app.route('/turma/form')
+def form_turma():
+    listar_professores = ProfessorDAO.listar()
+    listar_cursos = CursoDAO.listar()
+
+    return render_template('turma/form.html', turma=None, listar_professores=listar_professores, listar_cursos=listar_cursos)
+
+@app.route('/turma/salvar', methods=['POST'])
+@app.route('/turma/salvar/<int:id>', methods=['POST'])
+def salvar_turma(id=None):
+    semestre = request.form['semestre']
+    curso_id = request.form['curso_id']
+    professor_id = request.form['professor_id']
+
+    dao = TurmaDAO()
+    resultado = dao.salvar(id, semestre, curso_id, professor_id)
+
+    if resultado['status'] == 'ok':
+        flash('Regsitro salvo com sucesso', 'success')
+    else:
+        flash(resultado['mensagem'], 'danger')
+
+    return redirect('/turma')
+
+
+@app.route('/turma/editar/<int:id>')
+def editar_turma(id):
+    listar_professores = ProfessorDAO.listar()
+    listar_cursos = CursoDAO.listar()
+    dao = TurmaDAO()
+    turma = dao.buscar_por_id(id)
+
+    return render_template('turma/form.html', turma=turma, listar_professores=listar_professores, listar_cursos=listar_cursos)
+
 @app.route('/saudacao1/<nome>')
 def saudacao1(nome):
     print(f"Você digitou na URL {nome}")
@@ -220,6 +254,11 @@ def sobre():
 @app.route('/ajuda')
 def ajuda():
     return 'Ajuda do sistema'
+
+@app.route('/teste')
+def teste():
+    turma = [6, '2025.2', 2, 2]
+    return render_template('saudacao/teste.html', turma=turma)
 
 
 if __name__ == '__main__':
